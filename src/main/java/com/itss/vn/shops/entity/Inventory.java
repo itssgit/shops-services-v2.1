@@ -23,6 +23,7 @@ public class Inventory implements java.io.Serializable {
 	private String inventoryCode;
 	private int quantity;
 	private int quotaNo;
+	private float unitPrice;
 	private String unit;
 	private Integer inventoryType;
 	private String inventoryName;
@@ -34,22 +35,24 @@ public class Inventory implements java.io.Serializable {
 	public Inventory() {
 	}
 
-	public Inventory(String inventoryCode, int quantity, int quotaNo, String unit, String inventoryName,
+	public Inventory(String inventoryCode, int quantity, int quotaNo, float unitPrice, String unit, String inventoryName,
 			String inventoryDesc) {
 		this.inventoryCode = inventoryCode;
 		this.quantity = quantity;
 		this.quotaNo = quotaNo;
+		this.unitPrice = unitPrice;
 		this.unit = unit;
 		this.inventoryName = inventoryName;
 		this.inventoryDesc = inventoryDesc;
 	}
 
-	public Inventory(String inventoryCode, int quantity, int quotaNo, String unit, Integer inventoryType,
+	public Inventory(String inventoryCode, int quantity, int quotaNo,  float unitPrice, String unit, Integer inventoryType,
 			String inventoryName, String inventoryDesc, Integer status, Date createdTime, Date updatedTime) {
 		this.inventoryCode = inventoryCode;
 		this.quantity = quantity;
 		this.quotaNo = quotaNo;
 		this.unit = unit;
+		this.unitPrice = unitPrice;
 		this.inventoryType = inventoryType;
 		this.inventoryName = inventoryName;
 		this.inventoryDesc = inventoryDesc;
@@ -104,6 +107,15 @@ public class Inventory implements java.io.Serializable {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	@Column(name = "unit_price", nullable = false, precision = 12, scale = 0)
+	public float getUnitPrice() {
+		return this.unitPrice;
+	}
+
+	public void setUnitPrice(float unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 
 	@Column(name = "inventory_type")

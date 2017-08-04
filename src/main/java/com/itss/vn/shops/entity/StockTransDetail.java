@@ -20,7 +20,7 @@ public class StockTransDetail implements java.io.Serializable {
 
 	private Integer stockTransDetailId;
 	private int inventoryId;
-	private int quatity;
+	private int quantity;
 	private float vat;
 	private float promotion;
 	private float unitPrice;
@@ -35,7 +35,7 @@ public class StockTransDetail implements java.io.Serializable {
 	public StockTransDetail(int inventoryId, int quatity, float vat, float promotion, float unitPrice,
 			int stockTransId) {
 		this.inventoryId = inventoryId;
-		this.quatity = quatity;
+		this.quantity = quatity;
 		this.vat = vat;
 		this.promotion = promotion;
 		this.unitPrice = unitPrice;
@@ -45,7 +45,7 @@ public class StockTransDetail implements java.io.Serializable {
 	public StockTransDetail(int inventoryId, int quatity, float vat, float promotion, float unitPrice, int stockTransId,
 			Integer status, Date createdTime, Date updatedTime) {
 		this.inventoryId = inventoryId;
-		this.quatity = quatity;
+		this.quantity = quatity;
 		this.vat = vat;
 		this.promotion = promotion;
 		this.unitPrice = unitPrice;
@@ -76,13 +76,13 @@ public class StockTransDetail implements java.io.Serializable {
 		this.inventoryId = inventoryId;
 	}
 
-	@Column(name = "quatity", nullable = false)
-	public int getQuatity() {
-		return this.quatity;
+	@Column(name = "quantity", nullable = false)
+	public int getQuantity() {
+		return this.quantity;
 	}
 
-	public void setQuatity(int quatity) {
-		this.quatity = quatity;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	@Column(name = "vat", nullable = false, precision = 12, scale = 0)
