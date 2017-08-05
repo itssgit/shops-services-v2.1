@@ -28,7 +28,7 @@ public class QStockTransDetail extends EntityPathBase<StockTransDetail> {
 
     public final NumberPath<Float> promotion = createNumber("promotion", Float.class);
 
-    public final NumberPath<Integer> quatity = createNumber("quatity", Integer.class);
+    public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
     public final NumberPath<Integer> status = createNumber("status", Integer.class);
 

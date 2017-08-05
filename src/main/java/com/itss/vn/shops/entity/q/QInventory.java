@@ -39,6 +39,8 @@ public class QInventory extends EntityPathBase<Inventory> {
 
     public final NumberPath<Integer> quotaNo = createNumber("quotaNo", Integer.class);
 
+    public final NumberPath<Float> unitPrice = createNumber("unitPrice", Float.class);
+
     public final NumberPath<Integer> status = createNumber("status", Integer.class);
 
     public final StringPath unit = createString("unit");
