@@ -1,6 +1,7 @@
-package com.itss.vn.shops.service;
+package com.itss.vn.shops.service.impl;
 
 import com.itss.vn.shops.dto.InventoryDTO;
+import com.itss.vn.shops.service.InventoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

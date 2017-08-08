@@ -1,9 +1,11 @@
-package com.itss.vn.shops.repository;
+package com.itss.vn.shops.repository.impl;
 
 
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.shops.dto.ImageDTO;
 import com.itss.vn.shops.entity.Image;
+import com.itss.vn.shops.repository.ImageRepository;
+import com.itss.vn.shops.repository.custom.ImageRepositoryCustom;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

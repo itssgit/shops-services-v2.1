@@ -1,8 +1,9 @@
-package com.itss.vn.shops.service;
+package com.itss.vn.shops.service.impl;
 
 import com.itss.vn.common.exception.BadRequestException;
 import com.itss.vn.shops.dto.ImageDTO;
 import com.itss.vn.shops.repository.ImageRepository;
+import com.itss.vn.shops.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
