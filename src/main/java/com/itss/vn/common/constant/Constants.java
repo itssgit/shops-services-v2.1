@@ -20,4 +20,9 @@ public class Constants {
 
     //public static final String DATA_DIR = "../webapps/shops-services/data/";
     public static final String DATA_DIR = "../webapps/a/";
+
+    //Const trang thai cac ban ghi trong bang
+    public static final class STATUS {
+        public static final Integer DELETE = 0;
+    }
 }
