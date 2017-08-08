@@ -48,7 +48,7 @@ public class ImageController {
     }
 
     @RequestMapping(value = "/findOne", method = RequestMethod.GET, produces = "application/json")
-    public CommonResponse<ImageDTO> getUsers(@RequestParam(value = "imageId", required = true, defaultValue = "0") int imageId) {
+    public CommonResponse<ImageDTO> getImageById(@RequestParam(value = "imageId", required = true, defaultValue = "0") int imageId) {
         CommonResponse<ImageDTO> response = new CommonResponse<>();
         ImageDTO resultDTO = new ImageDTO();
         try {
@@ -56,6 +56,18 @@ public class ImageController {
             response.successfulRespone(resultDTO);
         } catch (Exception ex) {
             response.failedRespone(resultDTO, ex.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<Integer> deleteImage(@RequestParam(value = "imageId", required = true, defaultValue = "0") int imageId) {
+        CommonResponse<Integer> response = new CommonResponse<>();;
+        try {
+            response.successfulRespone(imageService.deleteImage(imageId));
+        } catch (Exception ex) {
+            response.failedRespone(imageId, ex.getMessage());
         }
 
         return response;

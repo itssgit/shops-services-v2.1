@@ -64,11 +64,25 @@ public class InventoryController {
         return response;
     }
 
-    @RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<Integer> deleteImage(@RequestParam(value = "inventoryId", required = true, defaultValue = "0") int inventoryId) {
+        CommonResponse<Integer> response = new CommonResponse<>();;
+        try {
+            response.successfulRespone(inventoryService.deleteStock(inventoryId));
+        } catch (Exception ex) {
+            response.failedRespone(inventoryId, ex.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<List<InventoryDTO>> getImage() {
         List<InventoryDTO> results = inventoryService.getListStock();
         CommonResponse<List<InventoryDTO>> response = new CommonResponse<>();
         response.successfulRespone(results);
         return response;
     }
+
+    
 }
