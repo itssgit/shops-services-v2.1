@@ -24,5 +24,8 @@ public class Constants {
     //Const trang thai cac ban ghi trong bang
     public static final class STATUS {
         public static final Integer DELETE = 0;
+        public static final Integer AVAILABLE = 1;
     }
+
+    public static final String EMPTY_STR = "";
 }

@@ -53,5 +53,10 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public InventoryDTO getStockDTOById(Integer inventoryID) {
         return inventoryRepository.getInventoryDTOById(inventoryID);
-    }               
+    }
+
+    @Override
+    public List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, String sortBy, String sortOrder) {
+        return inventoryRepository.getListStockByCondition(inventoryCode, inventoryName, inventoryType, sortBy, sortOrder);
+    }
 }

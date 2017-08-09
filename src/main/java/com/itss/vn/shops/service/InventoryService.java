@@ -20,4 +20,6 @@ public interface InventoryService {
     List<InventoryDTO> getListStock();
 
     InventoryDTO getStockDTOById(Integer inventoryID);
+
+    List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, String sortBy, String sortOrder);
 }
