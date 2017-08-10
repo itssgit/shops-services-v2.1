@@ -1,5 +1,6 @@
 package com.itss.vn.shops.controller;
 
+import com.itss.vn.common.constant.Constants;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.InventoryDTO;
 import com.itss.vn.shops.service.InventoryService;
@@ -25,7 +26,7 @@ public class InventoryController {
     InventoryService inventoryService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
-    public CommonResponse<InventoryDTO> addImage(@RequestBody @Valid final InventoryDTO inventoryDTO) {
+    public CommonResponse<InventoryDTO> addInventory(@RequestBody @Valid final InventoryDTO inventoryDTO) {
         CommonResponse<InventoryDTO> response = new CommonResponse<>();
         InventoryDTO addedDTO = new InventoryDTO();
         try {
@@ -38,7 +39,7 @@ public class InventoryController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")
-    public CommonResponse<InventoryDTO> updateImage(@RequestBody @Valid final InventoryDTO inventoryDTO) {
+    public CommonResponse<InventoryDTO> updateInventory(@RequestBody @Valid final InventoryDTO inventoryDTO) {
         CommonResponse<InventoryDTO> response = new CommonResponse<>();
         InventoryDTO updatedDTO = new InventoryDTO();
         try {
@@ -51,7 +52,7 @@ public class InventoryController {
     }
 
     @RequestMapping(value = "/findOne", method = RequestMethod.GET, produces = "application/json")
-    public CommonResponse<InventoryDTO> getUsers(@RequestParam(value = "imageId", required = true, defaultValue = "0") int stockId) {
+    public CommonResponse<InventoryDTO> getInventoryById(@RequestParam(value = "imageId", required = true, defaultValue = "0") int stockId) {
         CommonResponse<InventoryDTO> response = new CommonResponse<>();
         InventoryDTO resultDTO = new InventoryDTO();
         try {
@@ -64,11 +65,40 @@ public class InventoryController {
         return response;
     }
 
-    @RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
-    public CommonResponse<List<InventoryDTO>> getImage() {
+    @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<Integer> deleteInventory(@RequestParam(value = "inventoryId", required = true, defaultValue = "0") int inventoryId) {
+        CommonResponse<Integer> response = new CommonResponse<>();;
+        try {
+            response.successfulRespone(inventoryService.deleteStock(inventoryId));
+        } catch (Exception ex) {
+            response.failedRespone(inventoryId, ex.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<List<InventoryDTO>> getAllInventory() {
         List<InventoryDTO> results = inventoryService.getListStock();
         CommonResponse<List<InventoryDTO>> response = new CommonResponse<>();
         response.successfulRespone(results);
         return response;
     }
+
+    @RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<List<InventoryDTO>> getNguyenLieu(
+            @RequestParam(value = "inventoryCode", required = false, defaultValue = Constants.EMPTY_STR) String inventoryCode,
+            @RequestParam(value = "inventoryName", required = false, defaultValue = Constants.EMPTY_STR) String inventoryName,
+            @RequestParam(value = "inventoryType", required = false, defaultValue = "0") int inventoryType,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "inventoryId") String sortBy,
+            @RequestParam(value = "sortOrder", required = false, defaultValue = Constants.DESCENDING) String sortOrder) {
+        List<InventoryDTO> results = inventoryService.getListStockByCondition(inventoryCode, inventoryName, inventoryType, sortBy,
+                sortOrder);
+        CommonResponse<List<InventoryDTO>> response = new CommonResponse<List<InventoryDTO>>();
+        response.successfulRespone(results);
+
+        return response;
+    }
+
+    
 }

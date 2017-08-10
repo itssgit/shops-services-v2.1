@@ -1,4 +1,4 @@
-package com.itss.vn.shops.repository;
+package com.itss.vn.shops.repository.custom;
 
 import com.itss.vn.shops.dto.ImageDTO;
 
