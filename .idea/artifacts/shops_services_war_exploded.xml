@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="shops-services:war exploded">
-    <output-path>$PROJECT_DIR$/target/shops-services</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/shops_services_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -82,9 +82,6 @@
           <element id="library" level="project" name="Maven: joda-time:joda-time:2.9.9" />
           <element id="library" level="project" name="Maven: com.mangofactory:swagger-models:0.9.5" />
         </element>
-      </element>
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/shops-services/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="shops-services/web/Web" />
     </root>
