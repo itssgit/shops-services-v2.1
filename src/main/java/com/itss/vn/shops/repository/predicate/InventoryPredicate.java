@@ -8,11 +8,11 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 public class InventoryPredicate {
 
-    public static Predicate findInventory(String inventoryCode, String inventoryName, Integer inventoryType) {
+    public static Predicate findInventory(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus) {
         QInventory inventory = QInventory.inventory;
         BooleanExpression boolExpression;
         boolExpression = inventory.inventoryId.gt(0);
-        boolExpression = boolExpression.and(inventory.status.eq(Constants.STATUS.AVAILABLE));
+        boolExpression = boolExpression.and(inventory.status.eq(inventoryStatus));
 
         if (!inventoryCode.isEmpty()) {
             boolExpression = boolExpression.and(inventory.inventoryCode.like("%" + inventoryCode + "%"));

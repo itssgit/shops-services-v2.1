@@ -21,5 +21,5 @@ public interface InventoryService {
 
     InventoryDTO getStockDTOById(Integer inventoryID);
 
-    List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, String sortBy, String sortOrder);
+    List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus, String sortBy, String sortOrder);
 }

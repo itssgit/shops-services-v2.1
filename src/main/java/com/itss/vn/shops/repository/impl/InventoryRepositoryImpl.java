@@ -54,7 +54,7 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
     public Integer deleteInventory(Integer inventoryID) {
         Inventory inventory = inventoryRepository.findOne(inventoryID);
         if (inventory.getInventoryId() != null) {
-            inventory.setStatus(1);
+            inventory.setStatus(0);
             inventory.setUpdatedTime(new Date());
             inventoryRepository.saveAndFlush(inventory);
         } else {
@@ -89,9 +89,9 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
     }
 
     @Override
-    public List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, String sortBy, String sortOrder) {
+    public List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus, String sortBy, String sortOrder) {
         PageRequest pageRequest = DataUtils.getPageRequest(0, 100, sortBy, sortOrder);
-        Predicate where = InventoryPredicate.findInventory(inventoryCode, inventoryName, inventoryType);
+        Predicate where = InventoryPredicate.findInventory(inventoryCode, inventoryName, inventoryType, inventoryStatus);
         Page<Inventory> inventoryPage = inventoryRepository.findAll(where, pageRequest);
 
         List<Inventory> inventoryList = inventoryPage.getContent();

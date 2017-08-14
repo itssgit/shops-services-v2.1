@@ -65,9 +65,9 @@ public class InventoryController {
         return response;
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json")
-    public CommonResponse<Integer> deleteInventory(@RequestParam(value = "inventoryId", required = true, defaultValue = "0") int inventoryId) {
-        CommonResponse<Integer> response = new CommonResponse<>();;
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
+    public CommonResponse<Integer> deleteInventory(@RequestBody @Valid final  int inventoryId) {
+        CommonResponse<Integer> response = new CommonResponse<>();
         try {
             response.successfulRespone(inventoryService.deleteStock(inventoryId));
         } catch (Exception ex) {
@@ -90,9 +90,10 @@ public class InventoryController {
             @RequestParam(value = "inventoryCode", required = false, defaultValue = Constants.EMPTY_STR) String inventoryCode,
             @RequestParam(value = "inventoryName", required = false, defaultValue = Constants.EMPTY_STR) String inventoryName,
             @RequestParam(value = "inventoryType", required = false, defaultValue = "-1") int inventoryType,
+            @RequestParam(value = "inventoryStatus", required = false, defaultValue = "1") int inventoryStatus,
             @RequestParam(value = "sortBy", required = false, defaultValue = "inventoryId") String sortBy,
             @RequestParam(value = "sortOrder", required = false, defaultValue = Constants.DESCENDING) String sortOrder) {
-        List<InventoryDTO> results = inventoryService.getListStockByCondition(inventoryCode, inventoryName, inventoryType, sortBy,
+        List<InventoryDTO> results = inventoryService.getListStockByCondition(inventoryCode, inventoryName, inventoryType, inventoryStatus, sortBy,
                 sortOrder);
         CommonResponse<List<InventoryDTO>> response = new CommonResponse<List<InventoryDTO>>();
         response.successfulRespone(results);

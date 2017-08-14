@@ -19,7 +19,7 @@ public interface InventoryRepositoryCustom {
 
     List<InventoryDTO> getInventory();
 
-    List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, String sortBy, String sortOrder);
+    List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus, String sortBy, String sortOrder);
 
 }
 

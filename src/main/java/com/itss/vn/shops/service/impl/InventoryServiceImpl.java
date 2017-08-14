@@ -56,7 +56,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, String sortBy, String sortOrder) {
-        return inventoryRepository.getListStockByCondition(inventoryCode, inventoryName, inventoryType, sortBy, sortOrder);
+    public List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus, String sortBy, String sortOrder) {
+        return inventoryRepository.getListStockByCondition(inventoryCode, inventoryName, inventoryType, inventoryStatus, sortBy, sortOrder);
     }
 }
