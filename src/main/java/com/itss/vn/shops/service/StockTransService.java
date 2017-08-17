@@ -19,4 +19,6 @@ public interface StockTransService {
     List<StockTransDTO> find();
 
     StockTransDTO findById(Integer stockTransId);
+
+    
 }

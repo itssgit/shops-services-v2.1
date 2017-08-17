@@ -1,12 +1,14 @@
 package com.itss.vn.shops.repository.impl;
 
 import com.itss.vn.common.constant.Constants;
+import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.shops.dto.OptionSetDTO;
-import com.itss.vn.shops.entity.Image;
 import com.itss.vn.shops.entity.OptionSet;
 import com.itss.vn.shops.repository.OptionSetRepository;
 import com.itss.vn.shops.repository.custom.OptionSetRepositoryCustom;
+import com.itss.vn.shops.repository.predicate.OptionSetPredicate;
+import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,7 +42,7 @@ public class OptionSetRepositoryImpl implements OptionSetRepositoryCustom {
         if (optionSetUpdate.getOptionSetId() != null) {
             optionRepository.saveAndFlush(optionSet);
         } else {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
         return modelMapper.map(optionSet, OptionSetDTO.class);
     }
@@ -53,7 +55,7 @@ public class OptionSetRepositoryImpl implements OptionSetRepositoryCustom {
             optionSet.setUpdatedTime(new Date());
             optionRepository.saveAndFlush(optionSet);
         } else {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
         return optionSet.getOptionSetId();
     }
@@ -63,11 +65,12 @@ public class OptionSetRepositoryImpl implements OptionSetRepositoryCustom {
         OptionSet optionSet = optionRepository.findOne(id);
 
         if (optionSet == null) {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
 
         return modelMapper.map(optionSet, OptionSetDTO.class);
     }
+
 
     @Override
     public List<OptionSetDTO> find() {
@@ -80,5 +83,17 @@ public class OptionSetRepositoryImpl implements OptionSetRepositoryCustom {
             }
         }
         return result;
+    }
+
+    @Override
+    public OptionSetDTO getOptionSetDTO(String optionSetCode) {
+        Predicate where = OptionSetPredicate.findByCode(optionSetCode);
+        OptionSet optionSet = optionRepository.findOne(where);
+
+        if( optionSet == null) {
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
+        }
+
+        return modelMapper.map(optionSet, OptionSetDTO.class);
     }
 }

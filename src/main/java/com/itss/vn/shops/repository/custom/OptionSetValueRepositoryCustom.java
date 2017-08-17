@@ -19,4 +19,6 @@ public interface OptionSetValueRepositoryCustom {
     OptionSetValueDTO findById(Integer id);
 
     List<OptionSetValueDTO> find();
+
+    List<OptionSetValueDTO> findByOptionSetId(Integer optionSetId);
 }

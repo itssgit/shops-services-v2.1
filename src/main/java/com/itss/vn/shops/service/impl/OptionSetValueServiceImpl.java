@@ -2,7 +2,6 @@ package com.itss.vn.shops.service.impl;
 
 import com.itss.vn.common.exception.BadRequestException;
 import com.itss.vn.shops.dto.OptionSetValueDTO;
-import com.itss.vn.shops.entity.OptionSetValue;
 import com.itss.vn.shops.repository.OptionSetValueRepository;
 import com.itss.vn.shops.service.OptionSetValueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class OptionSetValueServiceImpl implements OptionSetValueService {
 
     @Override
     public Integer delete(Integer id) {
-        if(id != null){
+        if (id != null) {
             return repository.deleteOptionSetValue(id);
         } else {
             throw new BadRequestException("");
@@ -58,8 +57,17 @@ public class OptionSetValueServiceImpl implements OptionSetValueService {
 
     @Override
     public OptionSetValueDTO findById(Integer id) {
-        if(id != null) {
+        if (id != null) {
             return repository.findById(id);
+        } else {
+            throw new BadRequestException("");
+        }
+    }
+
+    @Override
+    public List<OptionSetValueDTO> findByOptionSetId(Integer optionSetId) {
+        if (optionSetId != null) {
+           return repository.findByOptionSetId(optionSetId);
         } else {
             throw new BadRequestException("");
         }

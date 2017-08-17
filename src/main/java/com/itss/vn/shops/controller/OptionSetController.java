@@ -1,5 +1,7 @@
 package com.itss.vn.shops.controller;
 
+import com.itss.vn.common.constant.Constants;
+import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.OptionSetDTO;
 import com.itss.vn.shops.service.OptionSetService;
@@ -54,7 +56,7 @@ public class OptionSetController {
         try {
             resultDTO = optionSetService.findById(optionSetId);
             response.successfulRespone(resultDTO);
-        } catch (Exception ex) {
+        } catch (RestException ex) {
             response.failedRespone(resultDTO, ex.getMessage());
         }
 
@@ -66,6 +68,21 @@ public class OptionSetController {
         List<OptionSetDTO> results = optionSetService.find();
         CommonResponse<List<OptionSetDTO>> response = new CommonResponse<>();
         response.successfulRespone(results);
+        return response;
+    }
+
+
+    @RequestMapping(value = "/getValueByCode", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<OptionSetDTO> getValueByCode(@RequestParam(value = "optionSetCode", required = true, defaultValue = Constants.EMPTY_STR) String optionSetCode) {
+        CommonResponse<OptionSetDTO> response = new CommonResponse<>();
+        OptionSetDTO resultDTO = new OptionSetDTO();
+        try {
+            resultDTO = optionSetService.getValueByCode(optionSetCode);
+            response.successfulRespone(resultDTO);
+            return response;
+        } catch (RestException ex) {
+            response.failedRespone(resultDTO, String.valueOf(ex.getCode()), ex.getMessage());
+        }
         return response;
     }
 }

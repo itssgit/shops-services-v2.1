@@ -19,4 +19,6 @@ public interface OptionSetService {
     List<OptionSetDTO> find();
 
     OptionSetDTO findById(Integer optionSetId);
+
+    OptionSetDTO getValueByCode(String optionSetCode);
 }

@@ -64,4 +64,12 @@ public class CommonResponse<T> implements Serializable {
 
         return this;
     }
+
+    public CommonResponse<T> failedRespone(T value, String resultCode, String messageError) {
+        this.resultCode = resultCode;
+        this.message = messageError;
+        this.value = value;
+
+        return this;
+    }
 }

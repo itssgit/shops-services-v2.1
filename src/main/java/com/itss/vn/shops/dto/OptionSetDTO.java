@@ -2,6 +2,7 @@ package com.itss.vn.shops.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created on 08-Aug-17.
@@ -16,6 +17,8 @@ public class OptionSetDTO implements Serializable {
     private Integer status;
     private Date createdTime;
     private Date updatedTime;
+
+    private List<OptionSetValueDTO> optionSetValueDTOList;
 
     public OptionSetDTO() {
     }
@@ -74,5 +77,13 @@ public class OptionSetDTO implements Serializable {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public List<OptionSetValueDTO> getOptionSetValueDTOList() {
+        return optionSetValueDTOList;
+    }
+
+    public void setOptionSetValueDTOList(List<OptionSetValueDTO> optionSetValueDTOList) {
+        this.optionSetValueDTOList = optionSetValueDTOList;
     }
 }

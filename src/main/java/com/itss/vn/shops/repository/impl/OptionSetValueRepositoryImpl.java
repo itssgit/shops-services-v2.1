@@ -7,11 +7,14 @@ import com.itss.vn.shops.dto.OptionSetValueDTO;
 import com.itss.vn.shops.entity.OptionSetValue;
 import com.itss.vn.shops.repository.OptionSetValueRepository;
 import com.itss.vn.shops.repository.custom.OptionSetValueRepositoryCustom;
+import com.itss.vn.shops.repository.predicate.OptionSetValuePredicate;
+import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -78,6 +81,18 @@ public class OptionSetValueRepositoryImpl implements OptionSetValueRepositoryCus
                 OptionSetValueDTO optionSetValueDTO = modelMapper.map(optionSetValue, OptionSetValueDTO.class);
                 result.add(optionSetValueDTO);
             }
+        }
+        return result;
+    }
+
+    @Override
+    public List<OptionSetValueDTO> findByOptionSetId(Integer optionSetId) {
+        List<OptionSetValueDTO> result = new ArrayList<>();
+        Predicate where = OptionSetValuePredicate.findByOptionSetId(optionSetId);
+        Iterator<OptionSetValue> optionSetValueList = repository.findAll(where).iterator();
+        while (optionSetValueList.hasNext()){
+            OptionSetValueDTO optionSetValueDTO = modelMapper.map(optionSetValueList.next(), OptionSetValueDTO.class);
+            result.add(optionSetValueDTO);
         }
         return result;
     }

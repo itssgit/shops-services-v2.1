@@ -19,4 +19,6 @@ public interface OptionSetRepositoryCustom {
     OptionSetDTO findById(Integer OptionSetId);
 
     List<OptionSetDTO> find();
+
+    OptionSetDTO getOptionSetDTO(String optionSetCode);
 }
