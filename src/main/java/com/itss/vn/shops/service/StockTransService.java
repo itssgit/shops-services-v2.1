@@ -20,5 +20,5 @@ public interface StockTransService {
 
     StockTransDTO findById(Integer stockTransId);
 
-    
+    StockTransDTO getStockTransByCode(String stockTransNo);
 }

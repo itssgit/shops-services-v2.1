@@ -1,11 +1,14 @@
 package com.itss.vn.shops.repository.impl;
 
 import com.itss.vn.common.constant.Constants;
+import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.shops.dto.StockTransDTO;
 import com.itss.vn.shops.entity.StockTrans;
 import com.itss.vn.shops.repository.StockTransRepository;
 import com.itss.vn.shops.repository.custom.StockTransRepositoryCustom;
+import com.itss.vn.shops.repository.predicate.StockTransPredicate;
+import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +30,8 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
 
     @Override
     public StockTransDTO add(StockTransDTO stockTransDTO) {
+        stockTransDTO.setCreatedTime(new Date());
+        stockTransDTO.setUpdatedTime(new Date());
         StockTrans stockTrans = modelMapper.map(stockTransDTO, StockTrans.class);
         repository.saveAndFlush(stockTrans);
         return modelMapper.map(stockTrans, StockTransDTO.class);
@@ -79,5 +84,16 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
             }
         }
         return result;
+    }
+
+    @Override
+    public StockTransDTO findByCode(String stockTransNo) {
+        Predicate where = StockTransPredicate.findByCode(stockTransNo);
+        StockTrans stockTrans = repository.findOne(where);
+        if (stockTrans == null) {
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
+        }
+
+        return modelMapper.map(stockTrans, StockTransDTO.class);
     }
 }

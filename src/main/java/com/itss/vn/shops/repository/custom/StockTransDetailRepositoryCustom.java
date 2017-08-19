@@ -1,7 +1,6 @@
 package com.itss.vn.shops.repository.custom;
 
 import com.itss.vn.shops.dto.StockTransDetailDTO;
-import com.itss.vn.shops.entity.StockTransDetail;
 
 import java.util.List;
 
@@ -20,4 +19,6 @@ public interface StockTransDetailRepositoryCustom {
     StockTransDetailDTO findById(Integer id);
 
     List<StockTransDetailDTO> find();
+
+    List<StockTransDetailDTO> findByStockTransId(Integer stockTransId);
 }

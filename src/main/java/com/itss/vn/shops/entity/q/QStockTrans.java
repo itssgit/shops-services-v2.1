@@ -39,7 +39,7 @@ public class QStockTrans extends EntityPathBase<StockTrans> {
 
     public final NumberPath<Float> totalVat = createNumber("totalVat", Float.class);
 
-    public final NumberPath<Integer> typeTrans = createNumber("typeTrans", Integer.class);
+    public final StringPath typeTrans = createString("typeTrans");
 
     public final DateTimePath<java.util.Date> updatedTime = createDateTime("updatedTime", java.util.Date.class);
 

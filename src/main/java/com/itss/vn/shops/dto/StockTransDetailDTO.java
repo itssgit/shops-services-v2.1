@@ -21,6 +21,8 @@ public class StockTransDetailDTO implements Serializable {
     private Date createdTime;
     private Date updatedTime;
 
+    private InventoryDTO inventoryDTO;
+
     public StockTransDetailDTO() {
     }
 
@@ -102,5 +104,13 @@ public class StockTransDetailDTO implements Serializable {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public InventoryDTO getInventoryDTO() {
+        return inventoryDTO;
+    }
+
+    public void setInventoryDTO(InventoryDTO inventoryDTO) {
+        this.inventoryDTO = inventoryDTO;
     }
 }

@@ -3,6 +3,7 @@ package com.itss.vn.shops.service.impl;
 import com.itss.vn.common.exception.BadRequestException;
 import com.itss.vn.shops.dto.StockTransDetailDTO;
 import com.itss.vn.shops.repository.StockTransDetailRepository;
+import com.itss.vn.shops.service.InventoryService;
 import com.itss.vn.shops.service.StockTransDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
 
     @Autowired
     private StockTransDetailRepository repository;
+
+    @Autowired
+    private InventoryService inventoryService;
 
     @Override
     public StockTransDetailDTO add(StockTransDetailDTO stockTransDetailDTO) {
@@ -41,7 +45,7 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
 
     @Override
     public Integer delete(Integer id) {
-        if(id != null){
+        if (id != null) {
             return repository.deleteStockTransDetail(id);
         } else {
             throw new BadRequestException("");
@@ -57,10 +61,21 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
 
     @Override
     public StockTransDetailDTO findById(Integer id) {
-        if(id != null) {
+        if (id != null) {
             return repository.findById(id);
         } else {
             throw new BadRequestException("");
         }
+    }
+
+    @Override
+    public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId) {
+        List<StockTransDetailDTO> stockTransDetailDTOS = repository.findByStockTransId(stockTransId);
+
+        stockTransDetailDTOS.forEach(stockTransDetailDTO -> {
+            stockTransDetailDTO.setInventoryDTO(inventoryService.getStockDTOById(stockTransDetailDTO.getInventoryId()));
+        });
+
+        return stockTransDetailDTOS;
     }
 }

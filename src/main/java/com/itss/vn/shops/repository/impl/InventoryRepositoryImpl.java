@@ -31,6 +31,8 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
 
     @Override
     public InventoryDTO addInventory(InventoryDTO inventoryDTO) {
+        inventoryDTO.setCreatedTime(new Date());
+        inventoryDTO.setUpdatedTime(new Date());
         Inventory inventory = modelMapper.map(inventoryDTO, Inventory.class);
         inventoryRepository.saveAndFlush(inventory);
 

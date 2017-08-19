@@ -2,6 +2,7 @@ package com.itss.vn.shops.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created on 08-Aug-17.
@@ -12,7 +13,7 @@ public class StockTransDTO implements Serializable {
 
     private Integer stockTransId;
     private String stockTransNo;
-    private Integer typeTrans;
+    private String typeTrans;
     private Date createdTime;
     private float totalPromotion;
     private float totalVat;
@@ -20,6 +21,7 @@ public class StockTransDTO implements Serializable {
     private String staffCode;
     private Integer status;
     private Date updatedTime;
+    private List<StockTransDetailDTO> stockTransDetailDTOList;
 
     public StockTransDTO() {
     }
@@ -40,11 +42,11 @@ public class StockTransDTO implements Serializable {
         this.stockTransNo = stockTransNo;
     }
 
-    public Integer getTypeTrans() {
+    public String getTypeTrans() {
         return typeTrans;
     }
 
-    public void setTypeTrans(Integer typeTrans) {
+    public void setTypeTrans(String typeTrans) {
         this.typeTrans = typeTrans;
     }
 
@@ -102,5 +104,13 @@ public class StockTransDTO implements Serializable {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public List<StockTransDetailDTO> getStockTransDetailDTOList() {
+        return stockTransDetailDTOList;
+    }
+
+    public void setStockTransDetailDTOList(List<StockTransDetailDTO> stockTransDetailDTOList) {
+        this.stockTransDetailDTOList = stockTransDetailDTOList;
     }
 }

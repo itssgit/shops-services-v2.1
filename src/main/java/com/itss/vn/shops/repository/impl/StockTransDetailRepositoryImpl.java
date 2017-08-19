@@ -6,11 +6,14 @@ import com.itss.vn.shops.dto.StockTransDetailDTO;
 import com.itss.vn.shops.entity.StockTransDetail;
 import com.itss.vn.shops.repository.StockTransDetailRepository;
 import com.itss.vn.shops.repository.custom.StockTransDetailRepositoryCustom;
+import com.itss.vn.shops.repository.predicate.StockTransDetailPredicate;
+import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,6 +30,8 @@ public class StockTransDetailRepositoryImpl implements StockTransDetailRepositor
 
     @Override
     public StockTransDetailDTO add(StockTransDetailDTO stockTransDetailDTO) {
+        stockTransDetailDTO.setCreatedTime(new Date());
+        stockTransDetailDTO.setUpdatedTime(new Date());
         StockTransDetail stockTransDetail = modelMapper.map(stockTransDetailDTO, StockTransDetail.class);
         repository.saveAndFlush(stockTransDetail);
         return modelMapper.map(stockTransDetail, StockTransDetailDTO.class);
@@ -80,5 +85,17 @@ public class StockTransDetailRepositoryImpl implements StockTransDetailRepositor
             }
         }
         return result;
+    }
+
+    @Override
+    public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId) {
+        List<StockTransDetailDTO> stockTransDetailDTOS = new ArrayList<>();
+        Predicate where = StockTransDetailPredicate.findByStockTransId(stockTransId);
+        Iterator<StockTransDetail> stockTransDetailIterator = repository.findAll(where).iterator();
+
+        while (stockTransDetailIterator.hasNext()) {
+            stockTransDetailDTOS.add(modelMapper.map(stockTransDetailIterator.next(), StockTransDetailDTO.class));
+        }
+        return stockTransDetailDTOS;
     }
 }

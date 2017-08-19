@@ -19,4 +19,6 @@ public interface StockTransRepositoryCustom {
     StockTransDTO findById(Integer id);
 
     List<StockTransDTO> find();
+
+    StockTransDTO findByCode(String stockTransNo);
 }
