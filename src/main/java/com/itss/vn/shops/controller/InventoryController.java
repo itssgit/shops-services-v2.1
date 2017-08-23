@@ -1,6 +1,7 @@
 package com.itss.vn.shops.controller;
 
 import com.itss.vn.common.constant.Constants;
+import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.InventoryDTO;
 import com.itss.vn.shops.service.InventoryService;
@@ -32,8 +33,8 @@ public class InventoryController {
         try {
             addedDTO = inventoryService.addStock(inventoryDTO);
             response.successfulRespone(addedDTO);
-        } catch (Exception ex) {
-            response.failedRespone(addedDTO, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(addedDTO, String.valueOf(ex.getCode()), ex.getMessage());
         }
         return response;
     }
@@ -45,8 +46,8 @@ public class InventoryController {
         try {
             updatedDTO = inventoryService.updateStock(inventoryDTO);
             response.successfulRespone(updatedDTO);
-        } catch (Exception ex) {
-            response.failedRespone(updatedDTO, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(updatedDTO, String.valueOf(ex.getCode()), ex.getMessage());
         }
         return response;
     }
@@ -58,8 +59,8 @@ public class InventoryController {
         try {
             resultDTO = inventoryService.getStockDTOById(stockId);
             response.successfulRespone(resultDTO);
-        } catch (Exception ex) {
-            response.failedRespone(resultDTO, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(resultDTO, String.valueOf(ex.getCode()), ex.getMessage());
         }
 
         return response;
@@ -70,8 +71,8 @@ public class InventoryController {
         CommonResponse<Integer> response = new CommonResponse<>();
         try {
             response.successfulRespone(inventoryService.deleteStock(inventoryId));
-        } catch (Exception ex) {
-            response.failedRespone(inventoryId, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(inventoryId, String.valueOf(ex.getCode()), ex.getMessage());
         }
 
         return response;

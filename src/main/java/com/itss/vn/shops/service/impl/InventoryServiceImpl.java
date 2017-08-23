@@ -1,5 +1,6 @@
 package com.itss.vn.shops.service.impl;
 
+import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.BadRequestException;
 import com.itss.vn.shops.dto.InventoryDTO;
 import com.itss.vn.shops.repository.InventoryRepository;
@@ -27,7 +28,7 @@ public class InventoryServiceImpl implements InventoryService {
             inventoryDTO.setInventoryId(null);
             return inventoryRepository.addInventory(inventoryDTO);
         } else {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
         }
     }
 
@@ -36,7 +37,7 @@ public class InventoryServiceImpl implements InventoryService {
         if (inventoryDTO.getInventoryId() != null) {
             return inventoryRepository.updateInventory(inventoryDTO);
         } else {
-            throw new BadRequestException();
+            throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
         }
     }
 

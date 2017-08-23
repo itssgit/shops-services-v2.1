@@ -36,6 +36,19 @@ public class StockTransController {
         return response;
     }
 
+    @RequestMapping(value = "/createOrUpdate", method = RequestMethod.POST, produces = "application/json")
+    public CommonResponse<StockTransDTO> addOrUpdate(@RequestBody @Valid final StockTransDTO stockTransDTO) {
+        CommonResponse<StockTransDTO> response = new CommonResponse<>();
+        StockTransDTO resultDTO = new StockTransDTO();
+        try {
+            resultDTO = stockTransService.insertOrUpdate(stockTransDTO);
+            response.successfulRespone(resultDTO);
+        } catch (RestException ex) {
+            response.failedRespone(resultDTO, String.valueOf(ex.getCode()), ex.getMessage());
+        }
+        return response;
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")
     public CommonResponse<StockTransDTO> update(@RequestBody @Valid final StockTransDTO stockTransDTO) {
         CommonResponse<StockTransDTO> response = new CommonResponse<>();

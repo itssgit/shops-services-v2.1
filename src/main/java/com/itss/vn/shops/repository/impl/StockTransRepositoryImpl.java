@@ -44,7 +44,7 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
         if (stockTransUpdate.getStockTransId() != null) {
             repository.saveAndFlush(stockTrans);
         } else {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
 
         return modelMapper.map(stockTrans, StockTransDTO.class);
@@ -58,7 +58,7 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
             stockTrans.setUpdatedTime(new Date());
             repository.saveAndFlush(stockTrans);
         } else {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
         return stockTrans.getStockTransId();
     }
@@ -67,7 +67,7 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
     public StockTransDTO findById(Integer id) {
         StockTrans stockTrans = repository.findOne(id);
         if (stockTrans == null) {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
 
         return modelMapper.map(stockTrans, StockTransDTO.class);

@@ -8,6 +8,7 @@ import com.itss.vn.shops.service.StockTransDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,12 +71,27 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
 
     @Override
     public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId) {
-        List<StockTransDetailDTO> stockTransDetailDTOS = repository.findByStockTransId(stockTransId);
+        List<StockTransDetailDTO> stockTransDetailDTOList = repository.findByStockTransId(stockTransId);
 
-        stockTransDetailDTOS.forEach(stockTransDetailDTO -> {
+        stockTransDetailDTOList.forEach(stockTransDetailDTO -> {
             stockTransDetailDTO.setInventoryDTO(inventoryService.getStockDTOById(stockTransDetailDTO.getInventoryId()));
         });
 
-        return stockTransDetailDTOS;
+        return stockTransDetailDTOList;
+    }
+
+    @Override
+    public List<StockTransDetailDTO> updateListStockTransDetail(List<StockTransDetailDTO> stockTransDetailDTOList) {
+        List<StockTransDetailDTO> listDTO = new ArrayList<>();
+        for (StockTransDetailDTO tmpDTO : stockTransDetailDTOList) {
+            if (tmpDTO.getStockTransDetailId() == null || tmpDTO.getStockTransDetailId() == 0) {
+                StockTransDetailDTO insertDTO = this.add(tmpDTO);
+                listDTO.add(insertDTO);
+            } else {
+                StockTransDetailDTO updatedDTO = this.update(tmpDTO);
+                listDTO.add(updatedDTO);
+            }
+        }
+        return listDTO;
     }
 }

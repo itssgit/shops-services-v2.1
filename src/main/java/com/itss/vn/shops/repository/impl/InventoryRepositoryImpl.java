@@ -1,6 +1,7 @@
 package com.itss.vn.shops.repository.impl;
 
 
+import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.utils.DataUtils;
 import com.itss.vn.shops.dto.InventoryDTO;
@@ -47,7 +48,9 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
         if (inventoryUpdate.getInventoryId() != null) {
             inventoryUpdate = inventory;
             inventoryRepository.saveAndFlush(inventory);
-        } else throw new RestException("Record doesn't exist");
+        } else {
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
+        }
 
         return modelMapper.map(inventoryUpdate, InventoryDTO.class);
     }
@@ -60,7 +63,7 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
             inventory.setUpdatedTime(new Date());
             inventoryRepository.saveAndFlush(inventory);
         } else {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
         return inventory.getInventoryId();
     }
@@ -70,7 +73,7 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
         Inventory inventory = inventoryRepository.findOne(inventoryID);
 
         if (inventory == null) {
-            throw new RestException("Record doesn't exist");
+            throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
 
         return modelMapper.map(inventory, InventoryDTO.class);

@@ -1,6 +1,7 @@
 package com.itss.vn.shops.service;
 
 import com.itss.vn.shops.dto.StockTransDTO;
+import com.itss.vn.shops.entity.StockTrans;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface StockTransService {
     StockTransDTO findById(Integer stockTransId);
 
     StockTransDTO getStockTransByCode(String stockTransNo);
+
+    StockTransDTO insertOrUpdate(StockTransDTO stockTransDTO);
 }

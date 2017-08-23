@@ -1,5 +1,6 @@
 package com.itss.vn.shops.controller;
 
+import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.StockTransDetailDTO;
 import com.itss.vn.shops.entity.StockTransDetail;
@@ -30,8 +31,8 @@ public class StockTransDetailController {
         try {
             addedDTO = stockTransDetailService.add(stockTransDetailDTO);
             response.successfulRespone(addedDTO);
-        } catch (Exception ex) {
-            response.failedRespone(addedDTO, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(addedDTO, String.valueOf(ex.getCode()), ex.getMessage());
         }
         return response;
     }
@@ -43,8 +44,8 @@ public class StockTransDetailController {
         try {
             updatedDTO = stockTransDetailService.update(stockTransDetailDTO);
             response.successfulRespone(updatedDTO);
-        } catch (Exception ex) {
-            response.failedRespone(updatedDTO, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(updatedDTO, String.valueOf(ex.getCode()), ex.getMessage());
         }
         return response;
     }
@@ -56,8 +57,8 @@ public class StockTransDetailController {
         try {
             resultDTO = stockTransDetailService.findById(stockTransDetailId);
             response.successfulRespone(resultDTO);
-        } catch (Exception ex) {
-            response.failedRespone(resultDTO, ex.getMessage());
+        } catch (RestException ex) {
+            response.failedRespone(resultDTO, String.valueOf(ex.getCode()), ex.getMessage());
         }
 
         return response;
