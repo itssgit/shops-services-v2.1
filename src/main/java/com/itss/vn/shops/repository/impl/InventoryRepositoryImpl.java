@@ -1,6 +1,7 @@
 package com.itss.vn.shops.repository.impl;
 
 
+import com.itss.vn.common.constant.Constants;
 import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.utils.DataUtils;
@@ -34,6 +35,8 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
     public InventoryDTO addInventory(InventoryDTO inventoryDTO) {
         inventoryDTO.setCreatedTime(new Date());
         inventoryDTO.setUpdatedTime(new Date());
+        String code = DataUtils.genCode(Constants.CODE_PREFIX.IVENTORY, inventoryRepository.getMaxId());
+        inventoryDTO.setInventoryCode(code);
         Inventory inventory = modelMapper.map(inventoryDTO, Inventory.class);
         inventoryRepository.saveAndFlush(inventory);
 

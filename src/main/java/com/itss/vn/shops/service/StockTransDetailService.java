@@ -20,7 +20,7 @@ public interface StockTransDetailService {
 
     StockTransDetailDTO findById(Integer stockTransDetailId);
 
-    List<StockTransDetailDTO> findByStockTransId(Integer stockTransId);
+    List<StockTransDetailDTO> findByStockTransId(Integer stockTransId, Integer status);
 
     List<StockTransDetailDTO> updateListStockTransDetail(List<StockTransDetailDTO> stockTransDetailDTOList);
 

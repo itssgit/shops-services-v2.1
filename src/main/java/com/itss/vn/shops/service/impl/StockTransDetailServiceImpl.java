@@ -29,6 +29,8 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
         if (stockTransDetailDTO.getStockTransDetailId() == null || stockTransDetailDTO.getStockTransDetailId() == 0) {
             stockTransDetailDTO.setStockTransDetailId(null);
             return repository.add(stockTransDetailDTO);
+
+
         } else {
             throw new BadRequestException("");
         }
@@ -70,8 +72,8 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
     }
 
     @Override
-    public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId) {
-        List<StockTransDetailDTO> stockTransDetailDTOList = repository.findByStockTransId(stockTransId);
+    public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId, Integer status) {
+        List<StockTransDetailDTO> stockTransDetailDTOList = repository.findByStockTransId(stockTransId, status);
 
         stockTransDetailDTOList.forEach(stockTransDetailDTO -> {
             stockTransDetailDTO.setInventoryDTO(inventoryService.getStockDTOById(stockTransDetailDTO.getInventoryId()));

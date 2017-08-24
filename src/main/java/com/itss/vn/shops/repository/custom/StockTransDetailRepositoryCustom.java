@@ -20,5 +20,5 @@ public interface StockTransDetailRepositoryCustom {
 
     List<StockTransDetailDTO> find();
 
-    List<StockTransDetailDTO> findByStockTransId(Integer stockTransId);
+    List<StockTransDetailDTO> findByStockTransId(Integer stockTransId, Integer status);
 }

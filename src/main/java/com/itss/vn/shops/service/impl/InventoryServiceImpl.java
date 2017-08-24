@@ -1,5 +1,6 @@
 package com.itss.vn.shops.service.impl;
 
+import com.itss.vn.common.constant.Constants;
 import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.BadRequestException;
 import com.itss.vn.shops.dto.InventoryDTO;
@@ -59,5 +60,19 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus, String sortBy, String sortOrder) {
         return inventoryRepository.getListStockByCondition(inventoryCode, inventoryName, inventoryType, inventoryStatus, sortBy, sortOrder);
+    }
+
+    @Override
+    public InventoryDTO adjustStock(Integer inventoryId, Integer quantity, float unitPrice, String typeTrans) {
+        InventoryDTO inventoryDTO = inventoryRepository.getInventoryDTOById(inventoryId);
+        if (typeTrans == Constants.TYPE_TRANS.PHIEU_NHAP) {
+            float newPrice = (inventoryDTO.getQuantity() * inventoryDTO.getUnitPrice() + quantity * unitPrice) / (inventoryDTO.getQuantity() + quantity);
+            inventoryDTO.setUnitPrice(newPrice);
+        }
+        inventoryDTO.setQuantity(inventoryDTO.getQuantity() + quantity);
+
+        //todo ghi log
+
+        return inventoryRepository.updateInventory(inventoryDTO);
     }
 }

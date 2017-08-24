@@ -25,7 +25,18 @@ public class Constants {
     public static final class STATUS {
         public static final Integer DELETE = 0;
         public static final Integer AVAILABLE = 1;
+        public static final Integer TEMPLTE = 2;
     }
 
     public static final String EMPTY_STR = "";
+
+    public static final class CODE_PREFIX {
+        public static final String IVENTORY = "IVT";
+        public static final String STOCKTRANS = "STK";
+
+    }
+
+    public static final class TYPE_TRANS {
+        public static final String PHIEU_NHAP = "PN";
+    }
 }

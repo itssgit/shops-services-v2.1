@@ -1,14 +1,17 @@
 package com.itss.vn.shops.service.impl;
 
+import com.itss.vn.common.constant.Constants;
 import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.BadRequestException;
 import com.itss.vn.shops.dto.StockTransDTO;
 import com.itss.vn.shops.dto.StockTransDetailDTO;
 import com.itss.vn.shops.repository.StockTransRepository;
+import com.itss.vn.shops.service.InventoryService;
 import com.itss.vn.shops.service.StockTransDetailService;
 import com.itss.vn.shops.service.StockTransService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +29,14 @@ public class StockTransServiceImpl implements StockTransService {
     @Autowired
     private StockTransDetailService stockTransDetailService;
 
+    @Autowired
+    private InventoryService inventoryService;
+
 
     @Override
+    @Transactional
     public StockTransDTO add(StockTransDTO stockTransDTO) {
-        StockTransDTO resultDTO = new StockTransDTO();
+        StockTransDTO resultDTO;
         if (stockTransDTO.getStockTransId() == null || stockTransDTO.getStockTransId() == 0) {
             stockTransDTO.setStockTransId(null);
             resultDTO = repository.add(stockTransDTO);
@@ -37,6 +44,17 @@ public class StockTransServiceImpl implements StockTransService {
             List<StockTransDetailDTO> stockTransDetailDTOList = new ArrayList<>();
 
             for (StockTransDetailDTO stockTransDetailDTO : stockTransDTO.getStockTransDetailDTOList()) {
+                if (resultDTO.getStatus() == Constants.STATUS.TEMPLTE) {
+                    stockTransDetailDTO.setStatus(Constants.STATUS.TEMPLTE);
+                } else {
+                    stockTransDetailDTO.setStatus(Constants.STATUS.AVAILABLE);
+
+                    //update inventory
+                    inventoryService.adjustStock(stockTransDetailDTO.getInventoryId(),
+                            stockTransDetailDTO.getQuantity(),
+                            stockTransDetailDTO.getUnitPrice(),
+                            stockTransDTO.getTypeTrans());
+                }
                 stockTransDetailDTO.setStockTransId(resultDTO.getStockTransId());
                 StockTransDetailDTO addedDTO = stockTransDetailService.add(stockTransDetailDTO);
                 stockTransDetailDTOList.add(addedDTO);
@@ -52,10 +70,11 @@ public class StockTransServiceImpl implements StockTransService {
 
 
     @Override
+    @Transactional
     public StockTransDTO update(StockTransDTO stockTransDTO) {
         if (stockTransDTO.getStockTransId() != null) {
             //delete stockTransDetail khong co trong list
-            List<StockTransDetailDTO> stockTransDetailDTOS = stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId());
+            List<StockTransDetailDTO> stockTransDetailDTOS = stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId(), stockTransDTO.getStatus());
 
             //List<stockTransDetailDTO> listDelete = new ArrayList<>();
             stockTransDetailDTOS.forEach(stockTransDetailDTO -> {
@@ -77,6 +96,9 @@ public class StockTransServiceImpl implements StockTransService {
 
             //add or update chi tiet co trong list
             stockTransDetailService.updateListStockTransDetail(stockTransDTO.getStockTransDetailDTOList());
+
+            //todo update stock_trans -> update inventory
+
 
             return repository.update(stockTransDTO);
         } else {
@@ -111,25 +133,29 @@ public class StockTransServiceImpl implements StockTransService {
 
     @Override
     public StockTransDTO getStockTransByCode(String stockTransNo) {
-        StockTransDTO stockTransDTO = new StockTransDTO();
+        StockTransDTO stockTransDTO;
 
         if (stockTransNo.isEmpty()) {
             throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
         } else {
             stockTransDTO = repository.findByCode(stockTransNo);
-            stockTransDTO.setStockTransDetailDTOList(stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId()));
+            stockTransDTO.setStockTransDetailDTOList(
+                    stockTransDetailService.findByStockTransId(
+                            stockTransDTO.getStockTransId(),
+                            Constants.STATUS.AVAILABLE));
         }
 
         return stockTransDTO;
     }
 
     @Override
+    @Transactional
     public StockTransDTO insertOrUpdate(StockTransDTO stockTransDTO) {
-        StockTransDTO resultDTO = new StockTransDTO();
+        StockTransDTO resultDTO;
         if (stockTransDTO.getStockTransId() == null || stockTransDTO.getStockTransId() == 0) {
-            this.add(stockTransDTO);
+            resultDTO = this.add(stockTransDTO);
         } else{
-            this.update(stockTransDTO);
+            resultDTO = this.update(stockTransDTO);
         }
         return resultDTO;
     }

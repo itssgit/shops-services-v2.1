@@ -22,4 +22,6 @@ public interface InventoryService {
     InventoryDTO getStockDTOById(Integer inventoryID);
 
     List<InventoryDTO> getListStockByCondition(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus, String sortBy, String sortOrder);
+
+    InventoryDTO adjustStock(Integer inventoryId, Integer quantity, float unitPrice, String typeTrans);
 }

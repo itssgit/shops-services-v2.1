@@ -88,9 +88,9 @@ public class StockTransDetailRepositoryImpl implements StockTransDetailRepositor
     }
 
     @Override
-    public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId) {
+    public List<StockTransDetailDTO> findByStockTransId(Integer stockTransId, Integer status) {
         List<StockTransDetailDTO> stockTransDetailDTOS = new ArrayList<>();
-        Predicate where = StockTransDetailPredicate.findByStockTransId(stockTransId);
+        Predicate where = StockTransDetailPredicate.findByStockTransId(stockTransId, status);
         Iterator<StockTransDetail> stockTransDetailIterator = repository.findAll(where).iterator();
 
         while (stockTransDetailIterator.hasNext()) {

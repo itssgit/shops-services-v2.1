@@ -1,7 +1,6 @@
 package com.itss.vn.shops.repository.predicate;
 
 
-import com.itss.vn.common.constant.Constants;
 import com.itss.vn.shops.entity.q.QInventory;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;

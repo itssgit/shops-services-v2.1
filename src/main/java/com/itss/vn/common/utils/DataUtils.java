@@ -53,4 +53,8 @@ public class DataUtils {
         return cal.getTime();
     }
 
+    public static String genCode(String prefix, Integer id) {
+        return prefix + String.valueOf(id + 1);
+    }
+
 }
