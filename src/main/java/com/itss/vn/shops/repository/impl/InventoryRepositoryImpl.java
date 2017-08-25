@@ -49,6 +49,8 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
 
         Inventory inventoryUpdate = inventoryRepository.findOne(inventoryDTO.getInventoryId());
         if (inventoryUpdate.getInventoryId() != null) {
+            inventory.setCreatedTime(inventoryUpdate.getCreatedTime());
+            inventory.setUpdatedTime(new Date());
             inventoryUpdate = inventory;
             inventoryRepository.saveAndFlush(inventory);
         } else {

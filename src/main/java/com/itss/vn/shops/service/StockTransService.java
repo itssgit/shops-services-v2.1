@@ -1,8 +1,8 @@
 package com.itss.vn.shops.service;
 
 import com.itss.vn.shops.dto.StockTransDTO;
-import com.itss.vn.shops.entity.StockTrans;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,4 +24,6 @@ public interface StockTransService {
     StockTransDTO getStockTransByCode(String stockTransNo);
 
     StockTransDTO insertOrUpdate(StockTransDTO stockTransDTO);
+
+    List<StockTransDTO> findByCondition(String stockTransNo, String typeTrans, Date startDate, Date endDate);
 }

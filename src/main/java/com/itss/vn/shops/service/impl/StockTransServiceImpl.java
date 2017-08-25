@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,11 +45,9 @@ public class StockTransServiceImpl implements StockTransService {
             List<StockTransDetailDTO> stockTransDetailDTOList = new ArrayList<>();
 
             for (StockTransDetailDTO stockTransDetailDTO : stockTransDTO.getStockTransDetailDTOList()) {
-                if (resultDTO.getStatus() == Constants.STATUS.TEMPLTE) {
-                    stockTransDetailDTO.setStatus(Constants.STATUS.TEMPLTE);
-                } else {
-                    stockTransDetailDTO.setStatus(Constants.STATUS.AVAILABLE);
+                stockTransDetailDTO.setStatus(Constants.STATUS.AVAILABLE);
 
+                if (resultDTO.getStatus() == Constants.STATUS.AVAILABLE) {
                     //update inventory
                     inventoryService.adjustStock(stockTransDetailDTO.getInventoryId(),
                             stockTransDetailDTO.getQuantity(),
@@ -73,34 +72,47 @@ public class StockTransServiceImpl implements StockTransService {
     @Transactional
     public StockTransDTO update(StockTransDTO stockTransDTO) {
         if (stockTransDTO.getStockTransId() != null) {
+
             //delete stockTransDetail khong co trong list
-            List<StockTransDetailDTO> stockTransDetailDTOS = stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId(), stockTransDTO.getStatus());
+            List<StockTransDetailDTO> stockTransDetailDTOS = stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId(), Constants.STATUS.AVAILABLE);
 
             //List<stockTransDetailDTO> listDelete = new ArrayList<>();
             stockTransDetailDTOS.forEach(stockTransDetailDTO -> {
                 Boolean isDelete = true;
-                for(StockTransDetailDTO tmpDTO : stockTransDTO.getStockTransDetailDTOList()){
-                    if(stockTransDetailDTO.getStockTransDetailId() == tmpDTO.getStockTransDetailId()
+                for (StockTransDetailDTO tmpDTO : stockTransDTO.getStockTransDetailDTOList()) {
+                    if (stockTransDetailDTO.getStockTransDetailId() == tmpDTO.getStockTransDetailId()
                             && stockTransDetailDTO.getStockTransDetailId() != null
-                            && stockTransDetailDTO.getStockTransDetailId() != 0 ){
-                        isDelete =  false;
+                            && stockTransDetailDTO.getStockTransDetailId() != 0) {
+                        isDelete = false;
                         break;
                     }
                 }
 
-                if(isDelete) {
+                if (isDelete) {
                     if (stockTransDetailDTO.getStockTransDetailId() != null && stockTransDetailDTO.getStockTransDetailId() != 0)
                         stockTransDetailService.delete(stockTransDetailDTO.getStockTransDetailId());
                 }
             });
 
             //add or update chi tiet co trong list
-            stockTransDetailService.updateListStockTransDetail(stockTransDTO.getStockTransDetailDTOList());
+            stockTransDTO.setStockTransDetailDTOList(
+                    stockTransDetailService.updateListStockTransDetail(
+                            stockTransDTO.getStockTransDetailDTOList(), stockTransDTO.getStockTransId()));
 
-            //todo update stock_trans -> update inventory
+            //update stock_trans -> update inventory
+            if (stockTransDTO.getStatus() == Constants.STATUS.AVAILABLE) {
+                for (StockTransDetailDTO tmpDTO : stockTransDTO.getStockTransDetailDTOList()) {
+                    inventoryService.adjustStock(tmpDTO.getInventoryId(),
+                            tmpDTO.getQuantity(),
+                            tmpDTO.getUnitPrice(),
+                            stockTransDTO.getTypeTrans());
+                }
+            }
 
+            StockTransDTO resultDTO = repository.update(stockTransDTO);
+            resultDTO.setStockTransDetailDTOList(stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId(), Constants.STATUS.AVAILABLE));
 
-            return repository.update(stockTransDTO);
+            return resultDTO;
         } else {
             throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
         }
@@ -108,7 +120,7 @@ public class StockTransServiceImpl implements StockTransService {
 
     @Override
     public Integer delete(Integer id) {
-        if(id != null){
+        if (id != null) {
             return repository.deleteStockTrans(id);
         } else {
             throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
@@ -124,7 +136,7 @@ public class StockTransServiceImpl implements StockTransService {
 
     @Override
     public StockTransDTO findById(Integer id) {
-        if(id != null) {
+        if (id != null) {
             return repository.findById(id);
         } else {
             throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
@@ -154,9 +166,14 @@ public class StockTransServiceImpl implements StockTransService {
         StockTransDTO resultDTO;
         if (stockTransDTO.getStockTransId() == null || stockTransDTO.getStockTransId() == 0) {
             resultDTO = this.add(stockTransDTO);
-        } else{
+        } else {
             resultDTO = this.update(stockTransDTO);
         }
         return resultDTO;
+    }
+
+    @Override
+    public List<StockTransDTO> findByCondition(String stockTransNo, String typeTrans, Date startDate, Date endDate) {
+        return null;
     }
 }

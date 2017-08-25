@@ -44,6 +44,8 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
         StockTrans stockTrans = modelMapper.map(stockTransDTO, StockTrans.class);
         StockTrans stockTransUpdate = repository.findOne(stockTransDTO.getStockTransId());
         if (stockTransUpdate.getStockTransId() != null) {
+            stockTrans.setCreatedTime(stockTransUpdate.getCreatedTime());
+            stockTrans.setUpdatedTime(new Date());
             repository.saveAndFlush(stockTrans);
         } else {
             throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);

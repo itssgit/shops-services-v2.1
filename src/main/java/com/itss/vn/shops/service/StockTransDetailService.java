@@ -22,6 +22,6 @@ public interface StockTransDetailService {
 
     List<StockTransDetailDTO> findByStockTransId(Integer stockTransId, Integer status);
 
-    List<StockTransDetailDTO> updateListStockTransDetail(List<StockTransDetailDTO> stockTransDetailDTOList);
+    List<StockTransDetailDTO> updateListStockTransDetail(List<StockTransDetailDTO> stockTransDetailDTOList, Integer stockTransId);
 
 }

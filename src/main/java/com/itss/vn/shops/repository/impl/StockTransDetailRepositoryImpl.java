@@ -42,6 +42,8 @@ public class StockTransDetailRepositoryImpl implements StockTransDetailRepositor
         StockTransDetail stockTransDetail = modelMapper.map(stockTransDetailDTO, StockTransDetail.class);
         StockTransDetail stockTransDetailUpdate = repository.findOne(stockTransDetailDTO.getStockTransDetailId());
         if (stockTransDetailUpdate.getStockTransDetailId() != null) {
+            stockTransDetail.setCreatedTime(stockTransDetailUpdate.getCreatedTime());
+            stockTransDetail.setUpdatedTime(new Date());
             repository.saveAndFlush(stockTransDetail);
         } else {
             throw new RestException("Record doesn't exist");

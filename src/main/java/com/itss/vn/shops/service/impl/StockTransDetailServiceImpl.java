@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,9 +84,11 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
     }
 
     @Override
-    public List<StockTransDetailDTO> updateListStockTransDetail(List<StockTransDetailDTO> stockTransDetailDTOList) {
+    public List<StockTransDetailDTO> updateListStockTransDetail(List<StockTransDetailDTO> stockTransDetailDTOList, Integer stockTransId) {
         List<StockTransDetailDTO> listDTO = new ArrayList<>();
         for (StockTransDetailDTO tmpDTO : stockTransDetailDTOList) {
+            tmpDTO.setUpdatedTime(new Date());
+            tmpDTO.setStockTransId(stockTransId);
             if (tmpDTO.getStockTransDetailId() == null || tmpDTO.getStockTransDetailId() == 0) {
                 StockTransDetailDTO insertDTO = this.add(tmpDTO);
                 listDTO.add(insertDTO);
