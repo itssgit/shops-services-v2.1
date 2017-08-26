@@ -3,12 +3,16 @@ package com.itss.vn.shops.controller;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.StockTransDTO;
+import com.itss.vn.shops.entity.StockTrans;
 import com.itss.vn.shops.service.StockTransService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,6 +98,26 @@ public class StockTransController {
             response.successfulRespone(resultDTO);
         } catch (RestException ex) {
             response.failedRespone(resultDTO, String.valueOf(ex.getCode()), ex.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/findByCondition", method = RequestMethod.GET, produces = "application/json")
+    public CommonResponse<List<StockTransDTO>> findByCondition(
+            @RequestParam(value = "stockTransNo", required = false, defaultValue = "") String stockTransNo,
+            @RequestParam(value = "typeTrans", required = false, defaultValue = "") String typeTrans,
+            @RequestParam(value = "startDate", required = true)  @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss") Date startDate,
+            @RequestParam(value = "endDate", required = true)  @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss") Date endDate){
+
+        CommonResponse<List<StockTransDTO>> response = new CommonResponse<>();
+        List<StockTransDTO> stockTransDTOList = new ArrayList<>();
+
+        try {
+            stockTransDTOList = stockTransService.findByCondition(stockTransNo, typeTrans, startDate, endDate);
+            response.successfulRespone(stockTransDTOList);
+        } catch (RestException ex) {
+            response.failedRespone(stockTransDTOList, String.valueOf(ex.getCode()), ex.getMessage());
         }
 
         return response;

@@ -2,6 +2,7 @@ package com.itss.vn.shops.repository.custom;
 
 import com.itss.vn.shops.dto.StockTransDTO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,4 +22,6 @@ public interface StockTransRepositoryCustom {
     List<StockTransDTO> find();
 
     StockTransDTO findByCode(String stockTransNo);
+
+    List<StockTransDTO> findByCondition(String stockTransNo, String typeTrans, Date startDate, Date endDate);
 }

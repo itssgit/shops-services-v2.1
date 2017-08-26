@@ -174,6 +174,6 @@ public class StockTransServiceImpl implements StockTransService {
 
     @Override
     public List<StockTransDTO> findByCondition(String stockTransNo, String typeTrans, Date startDate, Date endDate) {
-        return null;
+        return repository.findByCondition(stockTransNo, typeTrans, startDate, endDate);
     }
 }

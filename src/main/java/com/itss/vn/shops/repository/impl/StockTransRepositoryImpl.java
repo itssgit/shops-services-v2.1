@@ -4,7 +4,9 @@ import com.itss.vn.common.constant.Constants;
 import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.utils.DataUtils;
+import com.itss.vn.shops.dto.InventoryDTO;
 import com.itss.vn.shops.dto.StockTransDTO;
+import com.itss.vn.shops.entity.Inventory;
 import com.itss.vn.shops.entity.StockTrans;
 import com.itss.vn.shops.repository.StockTransRepository;
 import com.itss.vn.shops.repository.custom.StockTransRepositoryCustom;
@@ -12,6 +14,8 @@ import com.itss.vn.shops.repository.predicate.StockTransPredicate;
 import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,5 +103,23 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
         }
 
         return modelMapper.map(stockTrans, StockTransDTO.class);
+    }
+
+    @Override
+    public List<StockTransDTO> findByCondition(String stockTransNo, String typeTrans, Date startDate, Date endDate) {
+        PageRequest pageRequest = DataUtils.getPageRequest(0, 100, "stockTransId", Constants.DESCENDING);
+        Predicate where = StockTransPredicate.findByCondition(stockTransNo, typeTrans, startDate, endDate);
+
+        Page<StockTrans> pages = repository.findAll(where, pageRequest);
+        List<StockTrans> stockTransList = pages.getContent();
+
+        List<StockTransDTO> result = new ArrayList<>();
+        if (pages.getTotalElements() > 0) {
+            for (StockTrans stockTrans : stockTransList) {
+                StockTransDTO stockTransDTO = modelMapper.map(stockTrans, StockTransDTO.class);
+                result.add(stockTransDTO);
+            }
+        }
+        return result;
     }
 }
