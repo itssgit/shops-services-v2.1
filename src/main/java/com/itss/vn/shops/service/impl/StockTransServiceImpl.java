@@ -136,11 +136,15 @@ public class StockTransServiceImpl implements StockTransService {
 
     @Override
     public StockTransDTO findById(Integer id) {
+        StockTransDTO stockTransDTO;
         if (id != null) {
-            return repository.findById(id);
+            stockTransDTO = repository.findById(id);
+            stockTransDTO.setStockTransDetailDTOList(stockTransDetailService.findByStockTransId(stockTransDTO.getStockTransId(), stockTransDTO.getStatus()));
         } else {
             throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
         }
+
+        return stockTransDTO;
     }
 
     @Override
@@ -174,6 +178,12 @@ public class StockTransServiceImpl implements StockTransService {
 
     @Override
     public List<StockTransDTO> findByCondition(String stockTransNo, String typeTrans, Date startDate, Date endDate) {
-        return repository.findByCondition(stockTransNo, typeTrans, startDate, endDate);
+        List<StockTransDTO> stockTransDTOList = repository.findByCondition(stockTransNo, typeTrans, startDate, endDate);
+
+        for (StockTransDTO tmpDTO : stockTransDTOList) {
+            tmpDTO.setStockTransDetailDTOList(stockTransDetailService.findByStockTransId(tmpDTO.getStockTransId(), tmpDTO.getStatus()));
+        }
+
+        return stockTransDTOList;
     }
 }

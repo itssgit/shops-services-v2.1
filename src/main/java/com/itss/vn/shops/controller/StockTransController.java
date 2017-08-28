@@ -3,7 +3,6 @@ package com.itss.vn.shops.controller;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.StockTransDTO;
-import com.itss.vn.shops.entity.StockTrans;
 import com.itss.vn.shops.service.StockTransService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,8 +106,8 @@ public class StockTransController {
     public CommonResponse<List<StockTransDTO>> findByCondition(
             @RequestParam(value = "stockTransNo", required = false, defaultValue = "") String stockTransNo,
             @RequestParam(value = "typeTrans", required = false, defaultValue = "") String typeTrans,
-            @RequestParam(value = "startDate", required = true)  @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss") Date startDate,
-            @RequestParam(value = "endDate", required = true)  @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss") Date endDate){
+            @RequestParam(value = "startDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startDate,
+            @RequestParam(value = "endDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endDate) {
 
         CommonResponse<List<StockTransDTO>> response = new CommonResponse<>();
         List<StockTransDTO> stockTransDTOList = new ArrayList<>();
