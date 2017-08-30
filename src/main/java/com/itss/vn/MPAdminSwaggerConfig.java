@@ -1,4 +1,4 @@
-package com.itss.vn.shops;
+package com.itss.vn;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

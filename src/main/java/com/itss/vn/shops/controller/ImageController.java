@@ -5,6 +5,7 @@ import com.itss.vn.shops.dto.ImageDTO;
 import com.itss.vn.shops.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -47,6 +48,7 @@ public class ImageController {
         return response;
     }
 
+    @PreAuthorize("hasRole('WRITE')")
     @RequestMapping(value = "/findOne", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<ImageDTO> getImageById(@RequestParam(value = "imageId", required = true, defaultValue = "0") int imageId) {
         CommonResponse<ImageDTO> response = new CommonResponse<>();
@@ -72,7 +74,8 @@ public class ImageController {
 
         return response;
     }
-
+    
+    @PreAuthorize("hasAnyRole('READ','WRITE')")
     @RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<List<ImageDTO>> getImage() {
         List<ImageDTO> results = imageService.getImage();
