@@ -8,6 +8,6 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Integer>, QueryDslPredicateExecutor<Inventory>, InventoryRepositoryCustom {
 
-    @Query("SELECT max(inventoryId) FROM Inventory ")
+    @Query("SELECT (CASE WHEN max(inventoryId) IS NOT NULL THEN max(inventoryId) ELSE 1 END) FROM Inventory ")
     Integer getMaxId();
 }

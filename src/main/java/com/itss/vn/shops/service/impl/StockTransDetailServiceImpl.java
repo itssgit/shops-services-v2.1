@@ -30,8 +30,6 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
         if (stockTransDetailDTO.getStockTransDetailId() == null || stockTransDetailDTO.getStockTransDetailId() == 0) {
             stockTransDetailDTO.setStockTransDetailId(null);
             return repository.add(stockTransDetailDTO);
-
-
         } else {
             throw new BadRequestException("");
         }
@@ -54,7 +52,6 @@ public class StockTransDetailServiceImpl implements StockTransDetailService {
         } else {
             throw new BadRequestException("");
         }
-
     }
 
 

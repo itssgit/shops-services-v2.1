@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>shops-services-v2.1</name>
+    <name>shops-services</name>
 	<description>resful webservice for shops </description>
 
 	<parent>
@@ -168,7 +168,7 @@
     <!--</build>-->
 
     <build>
-        <finalName>shops-services-v2.1</finalName>
+        <finalName>shops-services</finalName>
         <plugins>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
