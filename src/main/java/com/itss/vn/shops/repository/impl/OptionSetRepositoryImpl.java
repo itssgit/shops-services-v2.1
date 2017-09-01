@@ -31,6 +31,8 @@ public class OptionSetRepositoryImpl implements OptionSetRepositoryCustom {
     @Override
     public OptionSetDTO add(OptionSetDTO optionSetDTO) {
         OptionSet optionSet = modelMapper.map(optionSetDTO, OptionSet.class);
+        optionSet.setCreatedTime(new Date());
+        optionSet.setUpdatedTime(new Date());
         optionRepository.saveAndFlush(optionSet);
         return modelMapper.map(optionSet, OptionSetDTO.class);
     }
@@ -40,6 +42,8 @@ public class OptionSetRepositoryImpl implements OptionSetRepositoryCustom {
         OptionSet optionSet = modelMapper.map(optionSetDTO, OptionSet.class);
         OptionSet optionSetUpdate = optionRepository.findOne(optionSetDTO.getOptionSetId());
         if (optionSetUpdate.getOptionSetId() != null) {
+            optionSet.setCreatedTime(optionSetUpdate.getCreatedTime());
+            optionSet.setUpdatedTime(new Date());
             optionRepository.saveAndFlush(optionSet);
         } else {
             throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);

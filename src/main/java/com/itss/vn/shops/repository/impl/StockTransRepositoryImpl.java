@@ -4,9 +4,7 @@ import com.itss.vn.common.constant.Constants;
 import com.itss.vn.common.constant.Errors;
 import com.itss.vn.common.exception.RestException;
 import com.itss.vn.common.utils.DataUtils;
-import com.itss.vn.shops.dto.InventoryDTO;
 import com.itss.vn.shops.dto.StockTransDTO;
-import com.itss.vn.shops.entity.Inventory;
 import com.itss.vn.shops.entity.StockTrans;
 import com.itss.vn.shops.repository.StockTransRepository;
 import com.itss.vn.shops.repository.custom.StockTransRepositoryCustom;
@@ -37,7 +35,7 @@ public class StockTransRepositoryImpl implements StockTransRepositoryCustom {
     public StockTransDTO add(StockTransDTO stockTransDTO) {
         stockTransDTO.setCreatedTime(new Date());
         stockTransDTO.setUpdatedTime(new Date());
-        stockTransDTO.setStockTransNo(DataUtils.genCode(Constants.CODE_PREFIX.STOCKTRANS, repository.getMaxId()));
+        stockTransDTO.setStockTransNo(DataUtils.genCode(Constants.CODE_PREFIX.STOCK_TRANS, repository.getMaxId()));
         StockTrans stockTrans = modelMapper.map(stockTransDTO, StockTrans.class);
         repository.saveAndFlush(stockTrans);
         return modelMapper.map(stockTrans, StockTransDTO.class);

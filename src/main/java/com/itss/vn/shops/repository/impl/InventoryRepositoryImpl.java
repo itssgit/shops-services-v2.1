@@ -35,7 +35,7 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
     public InventoryDTO addInventory(InventoryDTO inventoryDTO) {
         inventoryDTO.setCreatedTime(new Date());
         inventoryDTO.setUpdatedTime(new Date());
-        String code = DataUtils.genCode(Constants.CODE_PREFIX.IVENTORY, inventoryRepository.getMaxId());
+        String code = DataUtils.genCode(Constants.CODE_PREFIX.INVENTORY, inventoryRepository.getMaxId());
         inventoryDTO.setInventoryCode(code);
         Inventory inventory = modelMapper.map(inventoryDTO, Inventory.class);
         inventoryRepository.saveAndFlush(inventory);
@@ -51,13 +51,12 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom {
         if (inventoryUpdate.getInventoryId() != null) {
             inventory.setCreatedTime(inventoryUpdate.getCreatedTime());
             inventory.setUpdatedTime(new Date());
-            inventoryUpdate = inventory;
             inventoryRepository.saveAndFlush(inventory);
         } else {
             throw new RestException(Errors.ERROR_NOT_EXIST_RECORD_CODE, Errors.ERROR_NOT_EXIST_RECORD_MSG);
         }
 
-        return modelMapper.map(inventoryUpdate, InventoryDTO.class);
+        return modelMapper.map(inventory, InventoryDTO.class);
     }
 
     @Override

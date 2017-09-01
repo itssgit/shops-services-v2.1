@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,11 +37,11 @@ public class ActionTransLogRepositoryImpl implements ActionTransLogRepositoryCus
 
         ActionTransLog actionTransLogUpdate = actionTransLogRepository.findOne(actionTransLogDTO.getActionTransLogId());
         if (actionTransLogUpdate.getActionTransLogId() != null) {
-            actionTransLogUpdate = actionTransLog;
+            actionTransLog.setCreatedTime(actionTransLogUpdate.getCreatedTime());
             actionTransLogRepository.saveAndFlush(actionTransLog);
         } else throw new RestException("Record doesn't exist");
 
-        return modelMapper.map(actionTransLogUpdate, ActionTransLogDTO.class);
+        return modelMapper.map(actionTransLog, ActionTransLogDTO.class);
     }
 
     @Override

@@ -31,8 +31,13 @@ public class Constants {
     public static final String EMPTY_STR = "";
 
     public static final class CODE_PREFIX {
-        public static final String IVENTORY = "IVT";
-        public static final String STOCKTRANS = "STK";
+        public static final String INVENTORY = "IVT";
+        public static final String STOCK_TRANS = "STT";
+        public static final String PRODUCT = "PRD";
+        public static final String PRODUCT_GROUP = "PRG";
+        public static final String ATTRIBUTE = "ATB";
+        public static final String ATTRIBUTE_GROUPS = "ATG";
+        public static final String FINISHED = "FIN";
 
     }
 

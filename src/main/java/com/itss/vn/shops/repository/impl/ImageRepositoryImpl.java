@@ -27,6 +27,8 @@ public class ImageRepositoryImpl implements ImageRepositoryCustom {
     @Override
     public ImageDTO addImage(ImageDTO imageDTO) {
         Image image = modelMapper.map(imageDTO, Image.class);
+        image.setCreatedTime(new Date());
+        image.setUpdatedTime(new Date());
         imageRepository.saveAndFlush(image);
 
         return modelMapper.map(image, ImageDTO.class);
@@ -38,11 +40,12 @@ public class ImageRepositoryImpl implements ImageRepositoryCustom {
 
         Image imageUpdate = imageRepository.findOne(imageDTO.getImageId());
         if (imageUpdate.getImageId() != null) {
-            imageUpdate = image;
+            image.setCreatedTime(imageUpdate.getCreatedTime());
+            image.setUpdatedTime(new Date());
             imageRepository.saveAndFlush(image);
         } else throw new RestException("Record doesn't exist");
 
-        return modelMapper.map(imageUpdate, ImageDTO.class);
+        return modelMapper.map(image, ImageDTO.class);
     }
 
     @Override

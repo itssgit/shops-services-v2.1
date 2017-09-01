@@ -27,6 +27,7 @@ public class ActionTransLogDetailRepositoryImpl implements ActionTransLogDetailR
     @Override
     public ActionTransLogDetailDTO addActionTransLogDetail(ActionTransLogDetailDTO actionTransLogDetailDTO) {
         ActionTransLogDetail actionTransLogDetail = modelMapper.map(actionTransLogDetailDTO, ActionTransLogDetail.class);
+        actionTransLogDetail.setCreatedTime(new Date());
         actionTransLogDetailRepository.saveAndFlush(actionTransLogDetail);
 
         return modelMapper.map(actionTransLogDetail, ActionTransLogDetailDTO.class);
@@ -38,11 +39,11 @@ public class ActionTransLogDetailRepositoryImpl implements ActionTransLogDetailR
 
         ActionTransLogDetail actionTransLogDetailUpdate = actionTransLogDetailRepository.findOne(actionTransLogDetailDTO.getActionTransLogDetailId());
         if (actionTransLogDetailUpdate.getActionTransLogDetailId() != null) {
-            actionTransLogDetailUpdate = actionTransLogDetail;
+            actionTransLogDetail.setCreatedTime(actionTransLogDetailUpdate.getCreatedTime());
             actionTransLogDetailRepository.saveAndFlush(actionTransLogDetail);
         } else throw new RestException("Record doesn't exist");
 
-        return modelMapper.map(actionTransLogDetailUpdate, ActionTransLogDetailDTO.class);
+        return modelMapper.map(actionTransLogDetail, ActionTransLogDetailDTO.class);
     }
 
     @Override
