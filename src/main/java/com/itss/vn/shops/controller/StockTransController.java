@@ -7,6 +7,7 @@ import com.itss.vn.shops.service.StockTransService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class StockTransController {
     @Autowired
     StockTransService stockTransService;
 
+    @PreAuthorize("hasRole('STOCK_TRANS_INSERT')")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
     public CommonResponse<StockTransDTO> add(@RequestBody @Valid final StockTransDTO stockTransDTO) {
         CommonResponse<StockTransDTO> response = new CommonResponse<>();
@@ -39,6 +41,7 @@ public class StockTransController {
         return response;
     }
 
+    @PreAuthorize("hasRole('STOCK_TRANS_UPDATE')")
     @RequestMapping(value = "/createOrUpdate", method = RequestMethod.POST, produces = "application/json")
     public CommonResponse<StockTransDTO> addOrUpdate(@RequestBody @Valid final StockTransDTO stockTransDTO) {
         CommonResponse<StockTransDTO> response = new CommonResponse<>();
@@ -52,6 +55,7 @@ public class StockTransController {
         return response;
     }
 
+    @PreAuthorize("hasRole('STOCK_TRANS_UPDATE')")
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")
     public CommonResponse<StockTransDTO> update(@RequestBody @Valid final StockTransDTO stockTransDTO) {
         CommonResponse<StockTransDTO> response = new CommonResponse<>();
@@ -65,6 +69,7 @@ public class StockTransController {
         return response;
     }
 
+    @PreAuthorize("hasRole('STOCK_TRANS_FIND')")
     @RequestMapping(value = "/findOne", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<StockTransDTO> findById(@RequestParam(value = "stockTransId", required = true, defaultValue = "0") int stockTransId) {
         CommonResponse<StockTransDTO> response = new CommonResponse<>();
@@ -79,6 +84,7 @@ public class StockTransController {
         return response;
     }
 
+    @PreAuthorize("hasRole('STOCK_TRANS_FIND')")
     @RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<List<StockTransDTO>> find() {
         List<StockTransDTO> results = stockTransService.find();
@@ -87,6 +93,7 @@ public class StockTransController {
         return response;
     }
 
+    @PreAuthorize("hasRole('STOCK_TRANS_FIND')")
     @RequestMapping(value = "/findByCode", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<StockTransDTO> findByCode(@RequestParam(value = "stockTransNo", required = true, defaultValue = "") String stocKTransNo) {
         CommonResponse<StockTransDTO> response = new CommonResponse<>();
@@ -102,6 +109,7 @@ public class StockTransController {
         return response;
     }
 
+    @PreAuthorize("hasRole('STOCK_TRANS_FIND')")
     @RequestMapping(value = "/findByCondition", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<List<StockTransDTO>> findByCondition(
             @RequestParam(value = "stockTransNo", required = false, defaultValue = "") String stockTransNo,
