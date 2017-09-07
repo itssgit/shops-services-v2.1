@@ -4,6 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itss.vn.common.exception.BadRequestException;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +20,6 @@ import com.itss.vn.authorization.service.AuthorizationService;
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.AccountDTO;
 import com.itss.vn.shops.entity.Account;
-
-import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping(value = "/authorization")
@@ -39,21 +39,24 @@ public class AuthorizationController {
 	private String cookieName;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public OAuth2AccessToken authorizeToken(
-				HttpServletRequest request,
+	public CommonResponse<OAuth2AccessToken> authorizeToken(
 				HttpServletResponse response,
 				@RequestBody AuthorizationRequest authorizationRequest) {
-		Account account = authorizationService.authorizeAccount(authorizationRequest);
-		
-		OAuth2AccessToken token = authorizationService.generateAccessToken(account, clientId);
-		
-		Cookie cookie = new Cookie(cookieName, token.getValue());
-		cookie.setHttpOnly(true);
-		cookie.setMaxAge(3600);
-		cookie.setPath("/");
-		response.addCookie(cookie);
-		
-		return token;
+	    CommonResponse<OAuth2AccessToken> res = new CommonResponse<>();
+	    try {
+            Account account = authorizationService.authorizeAccount(authorizationRequest);
+            OAuth2AccessToken token = authorizationService.generateAccessToken(account, clientId);
+            Cookie cookie = new Cookie(cookieName, token.getValue());
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(3600);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            res.successfulRespone(token);
+        } catch (BadRequestException e) {
+            res.failedRespone(null, e.getMessage());
+        }
+        return res;
+
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -61,9 +64,9 @@ public class AuthorizationController {
 				HttpServletRequest request) {
 		CommonResponse<String> response = new CommonResponse<>();
 		String authorization = request.getHeader("Authorization");
-        if (authorization != null && authorization.contains("Bearer")){
-            String tokenValue = authorization.substring("Bearer".length()+1);
-            
+        if (authorization != null && authorization.contains("bearer")){
+            String tokenValue = authorization.substring("bearer".length()+1).trim();
+
             authorizationService.revokeToken(tokenValue);
             response.successfulRespone(tokenValue);
         }

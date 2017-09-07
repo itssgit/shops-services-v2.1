@@ -21,7 +21,7 @@ public class ResourceServer extends ResourceServerConfigurerAdapter{
 	public void configure(HttpSecurity http) throws Exception {
 		http.addFilterAfter(new TokenFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 		http.authorizeRequests()
-			.antMatchers("/image/find/").authenticated()
+			.antMatchers("/image/","/inventory/").authenticated()
 			.anyRequest().permitAll()
 			.and().csrf().disable();
 	}

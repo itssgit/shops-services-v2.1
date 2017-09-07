@@ -126,7 +126,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		}
 		
 		if(!HashUtils.compareToHash(authorizationRequest.getPassWord(), account.getPassWord())) {
-			throw new BadRequestException("Password not match");
+			throw new BadRequestException("User not found");
 		}
 		return account;
 	}

@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
     <name>shops-services</name>
-	<description>resful webservice for shops </description>
+    <description>resful webservice for shops</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -142,10 +142,10 @@
             <!--<activation>-->
             <!--<activeByDefault>true</activeByDefault>-->
             <!--</activation>-->
-            <properties>
-                <environment>dev</environment>
-                <logLevel>INFO</logLevel>
-            </properties>
+            <!--<properties>-->
+                <!--<environment>dev</environment>-->
+                <!--<logLevel>INFO</logLevel>-->
+            <!--</properties>-->
             <dependencies>
                 <!-- Swagger -->
                 <dependency>
@@ -159,12 +159,12 @@
 
 
     <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
     <!--</build>-->
 
     <build>

@@ -53,7 +53,7 @@ public class InventoryController {
     }
 
     @RequestMapping(value = "/findOne", method = RequestMethod.GET, produces = "application/json")
-    public CommonResponse<InventoryDTO> getInventoryById(@RequestParam(value = "imageId", required = true, defaultValue = "0") int stockId) {
+    public CommonResponse<InventoryDTO> getInventoryById(@RequestParam(value = "inventoryId", required = true, defaultValue = "0") int stockId) {
         CommonResponse<InventoryDTO> response = new CommonResponse<>();
         InventoryDTO resultDTO = new InventoryDTO();
         try {
