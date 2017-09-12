@@ -2,7 +2,6 @@ package com.itss.vn.shops.controller;
 
 import com.itss.vn.common.model.CommonResponse;
 import com.itss.vn.shops.dto.OptionSetValueDTO;
-import com.itss.vn.shops.entity.OptionSetValue;
 import com.itss.vn.shops.service.OptionSetValueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
