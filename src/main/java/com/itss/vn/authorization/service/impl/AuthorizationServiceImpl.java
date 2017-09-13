@@ -159,7 +159,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		Set<String> responseTypes = new HashSet<String>();
 		responseTypes.add("code");
 		
-		String role = account.getRole().getName();
+//		String role = account.getRole().getName();
 //		List<String> scopes = new ArrayList<>();
 		
 		// Authorities

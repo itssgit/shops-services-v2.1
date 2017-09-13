@@ -6,7 +6,9 @@ import com.itss.vn.shops.dto.ProductGroupsDTO;
 import com.itss.vn.shops.repository.ProductGroupsRepository;
 import com.itss.vn.shops.service.ProductGroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductGroupsServiceImpl implements ProductGroupsService {
 
     @Autowired
