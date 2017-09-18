@@ -3,6 +3,7 @@ package com.itss.vn;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
@@ -49,11 +51,17 @@ public class MPAdminSwaggerConfig {
 		/*Parameter parameter = new Parameter("Authorization", null, "Bear " + token.getValue(), true, true, null, null, null, "String", "String");
 		List<Parameter> parameters = new ArrayList<>();
 		parameters.add(parameter);*/
+		/*String token = "";
+		try {
+			token = authorizationService.authorize(authorizationRequest).getValue();
+		} catch (Exception ex) {
+			token = "";
+		}*/
 		
-		Parameter parameter = new ParameterBuilder().name("authorization").defaultValue("Bear " + token.getValue())
+		/*Parameter parameter = new ParameterBuilder().name("authorization").defaultValue("Bear " + token.getValue())
 								.description("header").modelRef(null).parameterType("String").required(false).build();
 		List<Parameter> parameters = new ArrayList<>();
-		parameters.add(parameter);
+		parameters.add(parameter);*/
 		
         return new Docket(DocumentationType.SWAGGER_2)
                 .host(swaggerHostUrl)
@@ -63,7 +71,25 @@ public class MPAdminSwaggerConfig {
                 .build()
                 .pathMapping("/")
                 .apiInfo(apiInfo())
-                .globalOperationParameters(parameters);
+                .globalOperationParameters(parameterList(token.getValue()));
+    }
+    
+    private List<Parameter> parameterList(String token) {
+    	List<Parameter> list = new ArrayList<>();
+    	String default_token = "";
+    	if(token != null && !StringUtils.isEmpty(token)) {
+    		default_token = "Bear " + token;
+    	}
+    	Parameter param = new ParameterBuilder()
+    			.name("Authorization")
+    			.defaultValue(default_token)
+    			.description("Access Token")
+    			.modelRef(new ModelRef("string"))
+    			.parameterType("header")
+    			.required(false)
+    			.build();
+    	list.add(param);
+    	return list;
     }
 
     private ApiInfo apiInfo() {
