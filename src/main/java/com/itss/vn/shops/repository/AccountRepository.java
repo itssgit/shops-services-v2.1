@@ -1,5 +1,6 @@
 package com.itss.vn.shops.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	
 	@Query("select u from Account u where u.userName=:userName")
 	public Account findByUserName(@Param("userName") String userName);
+	
+	@Query(nativeQuery = true, value = "select * from account a where a.id > 0")
+	public List<Account> findAllAccount();
 }

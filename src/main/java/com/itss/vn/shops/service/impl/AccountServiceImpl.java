@@ -1,8 +1,12 @@
 package com.itss.vn.shops.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itss.vn.common.model.ListResponse;
 import com.itss.vn.shops.dto.AccountDTO;
 import com.itss.vn.shops.entity.Account;
 import com.itss.vn.shops.repository.AccountRepository;
@@ -29,6 +33,23 @@ public class AccountServiceImpl implements AccountService{
 		AccountDTO response = new AccountDTO(account);
 
 		return response;
+	}
+
+	@Override
+	public ListResponse<AccountDTO> getUsers(String searchText) {
+		// TODO Auto-generated method stub
+		List<Account> accountList = accountRepository.findAllAccount();
+		List<AccountDTO> results = new ArrayList<>();
+		if(accountList.size() > 0) {
+			for(Account account : accountList) {
+				AccountDTO accountDTO = new AccountDTO(account);
+				results.add(accountDTO);
+			}
+		}
+		ListResponse<AccountDTO> responses = new ListResponse<>();
+		responses.setList(results);
+		responses.setTotalCount((long)results.size());
+		return responses;
 	}
 	
 	/*@Override
