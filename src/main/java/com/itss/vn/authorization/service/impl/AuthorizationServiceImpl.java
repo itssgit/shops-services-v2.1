@@ -158,10 +158,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		boolean approved = true;
 		Set<String> responseTypes = new HashSet<String>();
 		responseTypes.add("code");
-		
-//		String role = account.getRole().getName();
-//		List<String> scopes = new ArrayList<>();
-		
+
 		// Authorities
 		List<GrantedAuthority> authorities = new ArrayList<>();
 //		authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));

@@ -112,10 +112,8 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.9</version>
 		</dependency>
-		
+
 	</dependencies>
-
-
 
     <profiles>
         <profile>
@@ -139,13 +137,13 @@
 
         <profile>
             <id>dev</id>
-            <activation>
-            <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <environment>dev</environment>
-                <logLevel>INFO</logLevel>
-            </properties>
+            <!--<activation>-->
+            <!--<activeByDefault>true</activeByDefault>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<environment>dev</environment>-->
+                <!--<logLevel>INFO</logLevel>-->
+            <!--</properties>-->
             <dependencies>
                 <!-- Swagger -->
                 <dependency>

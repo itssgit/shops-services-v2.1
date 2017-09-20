@@ -56,7 +56,7 @@ public class Account extends BaseEntity{
 	@Column(name = "address")
 	private String address;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_role")
 	private Role role;
 

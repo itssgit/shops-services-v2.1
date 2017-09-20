@@ -57,7 +57,7 @@ public class MPAdminSwaggerConfig {
 		} catch (Exception ex) {
 			token = "";
 		}*/
-		
+
 		/*Parameter parameter = new ParameterBuilder().name("authorization").defaultValue("Bear " + token.getValue())
 								.description("header").modelRef(null).parameterType("String").required(false).build();
 		List<Parameter> parameters = new ArrayList<>();
@@ -73,7 +73,7 @@ public class MPAdminSwaggerConfig {
                 .apiInfo(apiInfo())
                 .globalOperationParameters(parameterList(token.getValue()));
     }
-    
+
     private List<Parameter> parameterList(String token) {
     	List<Parameter> list = new ArrayList<>();
     	String default_token = "";
