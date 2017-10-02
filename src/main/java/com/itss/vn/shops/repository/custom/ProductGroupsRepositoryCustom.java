@@ -19,4 +19,6 @@ public interface ProductGroupsRepositoryCustom {
     ProductGroupsDTO findById(Integer id);
 
     List<ProductGroupsDTO> find();
+
+    List<ProductGroupsDTO> getListProductGroupsDTOByCondition(String groupsCode, Integer status, String groupsName, String parentCode);
 }

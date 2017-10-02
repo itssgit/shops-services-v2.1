@@ -25,6 +25,6 @@ public class ProductGroupsDTO implements Serializable {
     private Integer status;
     private Date updatedTime;
     private Date createdTime;
-
+    private String parentCode;
 
 }

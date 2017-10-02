@@ -15,7 +15,7 @@ import java.util.Date;
 @JsonInclude(Include.NON_NULL)
 public class AttributeGroupsDTO implements Serializable {
 
-    private int attributeGroupId;
+    private Integer attributeGroupId;
     private String attributeGroupCode;
     private String attributeGroupName;
     private String attributeGroupDesc;

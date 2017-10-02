@@ -8,8 +8,12 @@ import com.itss.vn.shops.dto.ProductGroupsDTO;
 import com.itss.vn.shops.entity.ProductGroups;
 import com.itss.vn.shops.repository.ProductGroupsRepository;
 import com.itss.vn.shops.repository.custom.ProductGroupsRepositoryCustom;
+import com.itss.vn.shops.repository.predicate.ProductGroupsPredicate;
+import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,6 +86,24 @@ public class ProductGroupsRepositoryImpl implements ProductGroupsRepositoryCusto
     @Override
     public List<ProductGroupsDTO> find() {
         List<ProductGroups> productGroupsList = productGroupsRepository.findAll();
+
+        List<ProductGroupsDTO> result = new ArrayList<>();
+        if (productGroupsList.size() > 0) {
+            for (ProductGroups productGroups : productGroupsList) {
+                ProductGroupsDTO productGroupsDTO = modelMapper.map(productGroups, ProductGroupsDTO.class);
+                result.add(productGroupsDTO);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<ProductGroupsDTO> getListProductGroupsDTOByCondition(String groupsCode, Integer status, String groupsName, String parentCode) {
+        PageRequest pageRequest = DataUtils.getPageRequest(0, 1000, "groupId", Constants.DESCENDING);
+        Predicate where = ProductGroupsPredicate.findByCondition(groupsCode, status, groupsName);
+
+        Page<ProductGroups> productGroupsPage = productGroupsRepository.findAll(where, pageRequest);
+        List<ProductGroups> productGroupsList = productGroupsPage.getContent();
 
         List<ProductGroupsDTO> result = new ArrayList<>();
         if (productGroupsList.size() > 0) {

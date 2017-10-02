@@ -6,9 +6,11 @@ import com.itss.vn.shops.dto.ProductGroupsDTO;
 import com.itss.vn.shops.repository.ProductGroupsRepository;
 import com.itss.vn.shops.service.ProductGroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ProductGroupsServiceImpl implements ProductGroupsService {
 
     @Autowired
@@ -51,5 +53,32 @@ public class ProductGroupsServiceImpl implements ProductGroupsService {
         } else {
             throw new BadRequestException(Errors.ERROR_BAD_REQUEST_EMPTY);
         }
+    }
+
+    @Override
+    public List<ProductGroupsDTO> getListProductGroupsDTOByCondition(String groupsCode, Integer status, String groupsName, String parentCode) {
+        //call repo
+        List<ProductGroupsDTO> productGroupsDTOList = productGroupsRepository.getListProductGroupsDTOByCondition(groupsCode, status, groupsName, parentCode);
+        List<ProductGroupsDTO> resultList = new ArrayList<>();
+
+        if (!parentCode.isEmpty()) {
+            //filter by parent code
+            for (ProductGroupsDTO tmpDTO : productGroupsDTOList) {
+                tmpDTO.setParentCode(this.getParrentCodeByParentId(tmpDTO.getGroupParentId()));
+
+                if (tmpDTO.getParentCode() == parentCode) {
+                    resultList.add(tmpDTO);
+                }
+            }
+        } else {
+            return productGroupsDTOList;
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public String getParrentCodeByParentId(Integer parentGroupId) {
+        return null;
     }
 }

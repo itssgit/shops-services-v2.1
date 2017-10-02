@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 public class InventoryPredicate {
 
+
     public static Predicate findInventory(String inventoryCode, String inventoryName, Integer inventoryType, Integer inventoryStatus) {
         QInventory inventory = QInventory.inventory;
         BooleanExpression boolExpression;
@@ -25,8 +26,7 @@ public class InventoryPredicate {
             boolExpression = boolExpression.and(inventory.inventoryType.eq(inventoryType));
         }
 
-
-
         return boolExpression;
     }
+
 }
